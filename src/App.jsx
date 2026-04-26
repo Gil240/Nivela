@@ -18,8 +18,8 @@ const App = () => {
     { id: "nombre", cat: "Perfil", q: "¿Cuál es tu nombre?", tipo: "input" },
     { id: "edad", cat: "Perfil", q: "¿Qué edad tienes?", tipo: "input" },
     { id: "genero", cat: "Perfil", q: "Género", tipo: "btn", opciones: ["Hombre", "Mujer"] },
-    { id: "estatura", cat: "Perfil", q: "¿Estatura (cm)?", tipo: "input" },
-    { id: "peso", cat: "Perfil", q: "¿Peso (kg)?", tipo: "input" },
+    { id: "estatura", cat: "Perfil", q: "¿Cuánto mides?", tipo: "input" },
+    { id: "peso", cat: "Perfil", q: "¿Cuánto pesas?", tipo: "input" },
     { id: "cintura", cat: "Riesgo Preventivo", q: "¿Cómo consideras la medida de tu cintura?", tipo: "btn", opciones: [] },
     { id: "ejercicio", cat: "Riesgo Preventivo", q: "¿Realizas al menos 30 min de ejercicio diario?", tipo: "btn", opciones: ["Sí", "No"] },
     { id: "dieta_frutas", cat: "Riesgo Preventivo", q: "¿Con qué frecuencia comes verduras o frutas?", tipo: "btn", opciones: ["Todos los días", "No todos los días"] },
@@ -40,7 +40,8 @@ const App = () => {
 
     if (id === "nombre" && value.length < 3) return "Nombre muy corto";
     if (id === "edad" && (isNaN(value) || value < 1 || value > 120)) return "Edad inválida";
-    if (id === "estatura" && (isNaN(value) || value < 50 || value > 250)) return "Estatura inválida";
+    if (id === "estatura") { let num = parseFloat(value);
+    if (num >= 0.5 && num <= 2.5) { value = num * 100;} if (isNaN(value) || value < 50 || value > 250) return "Estatura inválida";}
     if (id === "peso" && (isNaN(value) || value < 20 || value > 300)) return "Peso inválido";
 
     return "";
@@ -174,19 +175,38 @@ const App = () => {
           <span className="category-tag">{preguntas[step].cat}</span>
           <h1 className="question-text">{preguntas[step].q}</h1>
 
-          {preguntas[step].tipo === 'input' ? (
-            <div className="input-box">
-              <input
-                type="text"
-                value={inputValue}
-                autoFocus
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && siguienteManual()}
-                placeholder="Escribe aquí..."
-              />
-              <p className="hint">Presiona Enter para continuar</p>
-              {error && <p style={{ color: "red" }}>{error}</p>}
-            </div>
+{preguntas[step].tipo === 'input' ? (
+  <div className="input-box">
+    
+    <div className="input-wrapper">
+      <input
+        type="text"
+        value={inputValue}
+        autoFocus
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && siguienteManual()}
+        placeholder={
+          preguntas[step].id === "peso"
+            ? "kg"
+            : preguntas[step].id === "estatura"
+            ? "m o cm"
+            : "Escribe aquí..."
+        }
+      />
+
+      {inputValue && preguntas[step].id === "peso" && (
+        <span className="unidad">kg</span>
+      )}
+
+      {inputValue && preguntas[step].id === "estatura" && (
+        <span className="unidad">m</span>
+      )}
+    </div>
+
+    <p className="hint">Presiona Enter para continuar</p>
+    {error && <p style={{ color: "red" }}>{error}</p>}
+  </div>
+
           ) : (
             <div className="options-grid">
               {opcionesActuales.map((opc, i) => (
