@@ -178,7 +178,7 @@ const App = () => {
 {preguntas[step].tipo === 'input' ? (
   <div className="input-box">
     
-    <div className="input-wrapper">
+<div className="input-wrapper">
       <input
         type="text"
         value={inputValue}
@@ -193,14 +193,6 @@ const App = () => {
             : "Escribe aquí..."
         }
       />
-
-      {inputValue && preguntas[step].id === "peso" && (
-        <span className="unidad">kg</span>
-      )}
-
-      {inputValue && preguntas[step].id === "estatura" && (
-        <span className="unidad">m</span>
-      )}
     </div>
 
     <p className="hint">Presiona Enter para continuar</p>
