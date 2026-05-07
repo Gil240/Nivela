@@ -189,7 +189,7 @@ const App = () => {
           preguntas[step].id === "peso"
             ? "kg"
             : preguntas[step].id === "estatura"
-            ? "m o cm"
+            ? "m/cm"
             : "Escribe aquí..."
         }
       />
