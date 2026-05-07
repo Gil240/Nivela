@@ -175,22 +175,3 @@ h1 br {
   margin-bottom: 10px;
 }
 
-.input-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.input-wrapper input {
-  padding-left: 50px; /* espacio para el kg */
-}
-
-.unidad-izq {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9CA3AF;
-  font-size: 18px;
-  pointer-events: none;
-}
